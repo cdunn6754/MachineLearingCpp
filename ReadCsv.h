@@ -8,7 +8,8 @@
 #include <boost/numeric/ublas/matrix_proxy.hpp>
 #include <boost/numeric/ublas/io.hpp>
 
-typedef 
+typedef boost::numeric::ublas::matrix<double> Matrix;
+typedef boost::tokenizer<boost::escaped_list_separator<char>> Tokenizer;
 
 using namespace std;
 
