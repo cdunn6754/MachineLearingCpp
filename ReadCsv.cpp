@@ -8,24 +8,21 @@
 #include <boost/numeric/ublas/matrix_proxy.hpp>
 #include <boost/numeric/ublas/io.hpp>
 
+#include "ReadCsv.h"
+
 using namespace std;
 using namespace boost;
 using namespace boost::numeric::ublas;
 
-int main() {
+Matrix ReadCsv(string data_path) {
     ifstream csv_file;
+    Matrix m(47,3,0);
     string line;
-    //vector<double> vec(2,0);
-    matrix<double> m(47,3,0);
-    cout << m(1,1) << endl;
-
-    typedef tokenizer<escaped_list_separator<char>> Tokenizer;
        
-    csv_file.open("app/data/ex1data2.txt");
-    if (!csv_file.is_open()) return 1;
+    csv_file.open(data_path);
+    if (!csv_file.is_open()) return Matrix(1,1,0);
 
     int row_idx = 0;
-    
     while (getline(csv_file, line)) {
 	Tokenizer tok(line);
 	boost::numeric::ublas::vector<double> vec(3);
@@ -37,6 +34,6 @@ int main() {
 	row(m, row_idx) = vec;
 	row_idx++;  
     }
-    cout << m << endl;
     csv_file.close();
+    return m;
 }
