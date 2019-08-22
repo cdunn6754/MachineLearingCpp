@@ -35,28 +35,15 @@ Matrix ReadCsv(string data_path) {
 
     if (parsed_csv.size() > 0 && parsed_csv[0].size() > 0) {
 	Matrix m(parsed_csv.size(),parsed_csv[0].size(),0);
+	int row_idx(0);
 	for (auto &row : parsed_csv) {
-	    //matrix_row<Matrix> mr(m, 
+	    matrix_row<Matrix> mr (m, row_idx);
+	    std::copy(row.begin(), row.end(), mr.begin());
+	    row_idx++;
 	}
 	return m;
     }
     else {
 	return Matrix(1,1,0);
     }
-
-
-    
-    
-    // int row_idx = 0;
-    // while (getline(csv_file, line)) {
-    // 	Tokenizer tok(line);
-    // 	boost::numeric::ublas::vector<double> vec(3);
-    // 	auto vec_it = vec.begin();
-    // 	for (auto &s : tok) {
-    // 	    *vec_it = stod(s);
-    // 	    vec_it++;
-    // 	}
-    // 	row(m, row_idx) = vec;
-    // 	row_idx++;  
-    // }
 }
