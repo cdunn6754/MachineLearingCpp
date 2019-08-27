@@ -1,23 +1,32 @@
 #include "LinearRegression.hpp"
 
-using namespace std;
-using namespace boost;
-using namespace boost::numeric::ublas;
-
-LinearRegression::LinearRegression(Matrix data_matrix) {
+LinearRegression::LinearRegression(matrix data_matrix) {
     _data_matrix = data_matrix;
-    cout << "\nwe did it: \n" << endl;
+    std::cout << "\nwe did it: \n" << std::endl;
 
-    for(Matrix::iterator1 r_itr = data_matrix.begin1(); r_itr != data_matrix.end1(); r_itr++) {
-    	boost::numeric::ublas::vector<double> row(data_matrix.size2());
-    	std::copy(r_itr.begin(), r_itr.end(), row.begin());
-    	cout << "printing row values" << endl;
-    	for (auto itr = row.begin(); itr != row.end(); itr++) {
-    	    cout << *itr << ", ";
-    	}
-	cout << endl;
-	double inner = inner_prod(row, row);	
-    	cout << inner << endl;
-    }
+    // for(matrix::iterator1 r_itr = data_matrix.begin1(); r_itr != data_matrix.end1(); r_itr++) {
+    // 	vector row(data_matrix.size2());
+    // 	std::copy(r_itr.begin(), r_itr.end(), row.begin());
+    // 	std::cout << "printing row values" << std::endl;
+    // 	for (auto itr = row.begin(); itr != row.end(); itr++) {
+    // 	    std::cout << *itr << ", ";
+    // 	}
+    // 	std::cout << std::endl;
+    // 	double inner = inner_prod(row, row);	
+    // 	std::cout << inner << std::endl;
+    // }
 
 };
+
+double LinearRegression::cost(vector theta) {
+    double cost(0.0);
+    for (auto r_itr = _data_matrix.begin1(); r_itr != _data_matrix.end1(); r_itr++) {
+	vector x(_data_matrix.size2());
+	x[0] = 1;
+	x[1] = *r_itr.begin();
+	double y = *(r_itr.begin() + 1);
+        cost += pow(inner_prod(theta, x) - y, 2);
+    }
+    cost /= (2*_data_matrix.size1());
+    std::cout << cost << std::endl;    
+}
